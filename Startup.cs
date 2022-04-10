@@ -44,7 +44,6 @@ namespace RCTableAdmin
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
