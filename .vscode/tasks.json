@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/RCTableAdmin.csproj",
+                "${workspaceFolder}/src/RCTableAdmin.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/RCTableAdmin.csproj",
+                "${workspaceFolder}/src/RCTableAdmin.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/RCTableAdmin.csproj"
+                "${workspaceFolder}/src/RCTableAdmin.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
