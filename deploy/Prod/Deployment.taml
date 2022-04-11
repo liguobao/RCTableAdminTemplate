@@ -1,0 +1,62 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: rc-tablea-dmin
+  name: rc-tablea-dmin
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: rc-tablea-dmin
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: rc-tablea-dmin
+    spec:
+      containers:
+        - image: ${IMAGE_NAME}
+          imagePullPolicy: IfNotPresent
+          name: house-map-ui
+          terminationMessagePath: /dev/termination-log
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 120
+            periodSeconds: 30
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 50m
+              memory: 256Mi
+      imagePullSecrets:
+        - name: regcred
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rc-tablea-dmin
+  namespace: default
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    run: rc-tablea-dmin
+  sessionAffinity: None
+  type: NodePort

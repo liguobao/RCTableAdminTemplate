@@ -1,0 +1,25 @@
+variables:
+  IMAGE_NAME: "ccr.ccs.tencentyun.com/liguobao/rctableadmin:$CI_COMMIT_SHA"
+
+stages:
+  - build
+  - deploy
+
+build-image:
+  stage: build
+  tags:
+    - liguobao-ubuntu
+  script:
+    - dotnet publish 
+    - docker build -t $IMAGE_NAME .
+    - docker push $IMAGE_NAME
+
+
+deploy-to-prod:
+  stage: deploy
+  tags:
+    - liguobao-ubuntu
+  script:
+    - find ./deploy/Prod/*.taml -type f -exec sh -c 'envsubst < {} > {}.yaml' \;
+    - kubectl config use-context hjy-qcloud
+    - kubectl apply -f ./deploy/Prod/Deployment.taml.yaml
