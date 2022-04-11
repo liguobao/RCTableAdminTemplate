@@ -1,5 +1,5 @@
 variables:
-  IMAGE_NAME: "ccr.ccs.tencentyun.com/liguobao/rctableadmin:$CI_COMMIT_SHA"
+  IMAGE_NAME: "liguobao/rctableadmin:$CI_COMMIT_SHA"
 
 stages:
   - build
